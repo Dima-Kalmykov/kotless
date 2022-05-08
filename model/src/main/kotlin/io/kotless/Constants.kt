@@ -8,20 +8,22 @@ object Constants {
         const val accessKey = "LOCALSTACK_ACCESSKEY"
         const val secretKey = "LOCALSTACK_SECRETKEY"
 
-        fun url(resource: AwsResource) = "LOCALSTACK_${resource.prefix.toUpperCase()}_URL"
-        fun region(resource: AwsResource) = "LOCALSTACK_${resource.prefix.toUpperCase()}_REGION"
+        fun url(resource: AwsResource) = "LOCALSTACK_${resource.prefix.uppercase()}_URL"
+        fun region(resource: AwsResource) = "LOCALSTACK_${resource.prefix.uppercase()}_REGION"
     }
 
     object Local {
         const val serverPort = "SERVER_PORT"
         const val autowarmMinutes = "AUTOWARM_MINUTES"
+        const val classToStart = "CLASS_TO_START"
 
         object Kotless {
             const val workingDir = "WORKING_DIR"
         }
 
-        object KtorOrSpring {
-            const val classToStart = "CLASS_TO_START"
+        enum class Framework(val classToStart: String) {
+            SPRING(classToStart),
+            KTOR(classToStart),
         }
     }
 }

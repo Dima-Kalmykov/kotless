@@ -61,13 +61,19 @@ internal open class KotlessLocalRunTask : DefaultTask() {
 
             environment[Constants.Local.serverPort] = myKotless.extensions.local.port
 
-            if (type == DSLType.Ktor || type == DSLType.SpringBoot) {
-                val local = LocalParser.parse(myAllSources, Dependencies.getDependencies(project))
-                environment[Constants.Local.KtorOrSpring.classToStart] = local.entrypoint.qualifiedName.substringBefore("::")
-            }
+            val local = LocalParser.parse(myAllSources, Dependencies.getDependencies(project))
+            val qualifiedName = local.entrypoint.qualifiedName.substringBefore("::")
 
-            if (type == DSLType.Kotless) {
-                environment[Constants.Local.Kotless.workingDir] = myKotless.config.dsl.resolvedStaticsRoot.canonicalPath
+            when (type) {
+                DSLType.Ktor -> {
+                    environment[Constants.Local.Framework.KTOR.classToStart] = qualifiedName
+                }
+                DSLType.SpringBoot -> {
+                    environment[Constants.Local.Framework.SPRING.classToStart] = qualifiedName
+                }
+                DSLType.Kotless -> {
+                    environment[Constants.Local.Kotless.workingDir] = myKotless.config.dsl.resolvedStaticsRoot.canonicalPath
+                }
             }
 
             if (myKotless.config.optimization.autowarm.enable) {

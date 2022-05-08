@@ -84,7 +84,7 @@ abstract class KotlessAzure : AzureRequestHandler {
     }
 
     @OptIn(InternalAPI::class, EngineAPI::class)
-    override fun timer(@TimerTrigger(name = "timer", schedule = "* * * * * *") timer: String, context: ExecutionContext) {
+    override fun timer(@TimerTrigger(name = "timer", schedule = "* * * * * *") timerInfo: String, context: ExecutionContext) {
         logger.trace("Executing warmup sequence")
         engine.environment.monitor.raise(LambdaWarming, engine.application)
         logger.trace("Warmup sequence executed")

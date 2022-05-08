@@ -55,7 +55,7 @@ class HandlerAzure : AzureRequestHandler {
         return outputResponse.build()
     }
 
-    override fun timer(@TimerTrigger(name = "timer", schedule = "* * * * * *") timer: String, context: ExecutionContext) {
+    override fun timer(@TimerTrigger(name = "timer", schedule = "* * * * * *") timerInfo: String, context: ExecutionContext) {
         val resource = context.functionName
         when {
             resource.contains(ScheduledEventType.Autowarm.prefix) -> {
