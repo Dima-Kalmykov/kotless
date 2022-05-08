@@ -13,7 +13,7 @@ import io.kotless.plugin.gradle.utils.gradle.Groups
 import io.kotless.plugin.gradle.utils.gradle.myCreate
 import org.gradle.api.Project
 import org.gradle.api.Task
-import org.gradle.api.plugins.ApplicationPluginConvention
+import org.gradle.api.plugins.JavaApplication
 import org.gradle.api.tasks.TaskContainer
 import org.gradle.kotlin.dsl.getPlugin
 
@@ -26,7 +26,7 @@ internal object KotlessLocalTasks {
         with(tasks) {
             val local = LocalStackRunner(kotless.extensions.local.useAWSEmulation, AwsResource.forLocalStart)
 
-            convention.getPlugin<ApplicationPluginConvention>().mainClassName = kotless.config.dsl.typeOrDefault.descriptor.localEntryPoint
+            convention.getPlugin<JavaApplication>().mainClass.set(kotless.config.dsl.typeOrDefault.descriptor.localEntryPoint)
 
             if (kotless.extensions.local.useAWSEmulation) {
                 setupLocalWithAWSEmulation(local, download)

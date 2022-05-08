@@ -42,7 +42,7 @@ internal open class TerraformDownloadTask : DefaultTask() {
     fun act() {
         logger.lifecycle("Downloading terraform version $version for OS $os")
 
-        Downloads.download(URL("https://releases.hashicorp.com/terraform/$version/terraform_${version}_$os.zip"), binFile.parentFile, Archive.ZIP)
+        Downloads.download(binFile, version, ResourceType.TERRAFORM)
 
         if (Os.isFamily(Os.FAMILY_MAC) || Os.isFamily(Os.FAMILY_UNIX)) {
             CommandLine.execute("chmod", listOf("+x", binFile.absolutePath), binFile.parentFile, redirectStdout = false)

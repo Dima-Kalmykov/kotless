@@ -32,7 +32,6 @@ object FunctionFactory : GenerationFactory<Lambda, FunctionFactory.Output> {
         val storageContainer = context.output.get(context.webapp, InfoFactory).staticStorageContainer
         val storageBlob = context.output.get(context.webapp, StorageFactory).storageBlob
         val storageAccountSas = context.output.get(context.webapp, StorageFactory).storageAccountSas
-        val subscription = context.output.get(context.webapp, InfoFactory).azureSubscription
 
         val appServicePlan = app_service_plan(context.names.tf("app", "service", "plan")) {
             name = context.names.azure(context.schema.config.cloud.prefix.replace("-", ""), "functions", "consumption", "asp")
